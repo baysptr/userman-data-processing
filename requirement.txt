@@ -9,3 +9,4 @@ pycparser==2.19
 pymongo==2.8.1
 six==1.14.0
 Werkzeug==0.16.1
+flask_jwt_extended

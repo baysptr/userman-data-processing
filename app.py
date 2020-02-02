@@ -4,6 +4,10 @@ from argon2 import PasswordHasher
 from bson.objectid import ObjectId
 from datetime import datetime
 from helper import pretty_respon_users, str2bool, respon_action, pretty_respon_acrawler, pretty_respon_monitor
+from flask_jwt_extended import (
+    JWTManager, jwt_optional,jwt_required, create_access_token,
+    get_jwt_identity
+)
 
 app = Flask(__name__)
 client = pymongo.MongoClient('mongodb://localhost:27017/')
@@ -12,6 +16,9 @@ um = db['user_management']
 acw = db['account_crawler']
 mon = db['monitor']
 ph = PasswordHasher()
+
+app.config['JWT_SECRET_KEY'] = 'super-secret-super-rahasia-xcjvhaweurhvskjhn'  # Change this!
+jwt = JWTManager(app)
 
 # is Structure storing to collection user_management
 # users = {}
@@ -59,17 +66,50 @@ def init():
 # USER ROLE MANAGEMENT
 # =========================================================================
 
+@jwt.expired_token_loader
+def my_expired_token_callback(expired_token):
+    token_type = expired_token['type']
+    return jsonify({
+        'isAuth': False,
+        'status': 'Token has expired'
+    }), 401
+
+@app.route('/login', methods=['POST'])
+def login():
+    username = request.json['username']
+    password = ph.hash(request.json['password']).hexdigest()
+    if not username:
+        return jsonify({"msg": "Missing username parameter"}), 400
+    if not password:
+        return jsonify({"msg": "Missing password parameter"}), 400
+
+    us = um.find_one( { "username": username,"password":password  } )
+    if not us:
+        return jsonify({"msg": "Bad username or password"}), 401
+    access_token = create_access_token(identity={   'username':username,
+                                                    'akses': [
+                                                            'is_fb':us['is_fb'],
+                                                            'is_tw':us['is_tw'],
+                                                            'is_ig':us['is_ig'],
+                                                            'is_tg':us['is_tg'],
+                                                            'is_superadmin':us['is_superadmin']
+                                                            ]})
+    return jsonify(access_token=access_token), 200
+
 @app.route('/list_users', methods=['GET'])
+@jwt_required
 def list_users():
     data = um.find({"is_superadmin": False})
     return jsonify(pretty_respon_users(data))
 
 @app.route('/where_id/<string:_id>', methods=['GET'])
+@jwt_required
 def where_id(_id):
     data = um.find({"_id": ObjectId(_id)})
     return jsonify(pretty_respon_users(data))
 
 @app.route('/delete_users', methods=['POST'])
+@jwt_required
 def delete_users():
     req = request.values
     id = req['id']
@@ -77,6 +117,7 @@ def delete_users():
     return jsonify(respon_action(200, "Success delete data!"))
 
 @app.route('/add_users', methods=['POST'])
+@jwt_required
 def add_users():
     users = {}
     req = request.values
@@ -93,6 +134,7 @@ def add_users():
     return jsonify(respon_action(200, "Success save data!"))
 
 @app.route('/update_role', methods=['POST', 'PUT'])
+@jwt_required
 def update_role():
     users = {}
     req = request.values
@@ -178,6 +220,28 @@ def add_target():
     monitor['tgl_post'] = datetime.today().strftime("%Y-%m-%d %H:%M:%S")
     mon.insert(monitor)
     return jsonify(respon_action(200, "Success save data!"))
+
+
+# =========================================================================
+# FRONTEND API
+# =========================================================================
+
+@app.route('/dashboard', methods=["POST"])
+def dashbord(hastag,sources):
+    mentions = ori_data.find({'text':{  '$regex' : ".*"+hastag+".*"},'source':{ '$in':sources } }).count()
+    positiv = ori_data.find({'text':{  '$regex' : ".*"+hastag+".*"},'source':{ '$in':sources },'sentiment':1 }).count()
+    negativ = ori_data.find({'text':{  '$regex' : ".*"+hastag+".*"},'source':{ '$in':sources },'sentiment':2 }).count()
+    netral = ori_data.find({'text':{  '$regex' : ".*"+hastag+".*"},'source':{ '$in':sources },'sentiment':0 }).count()
+    data = {
+        'hastag'   : hastag,
+        'sources'  : sources,
+        'mentions_count'   : mentions,
+        'mentions_positiv' : positiv,
+        'mentions_negativ' : negativ,
+        'mentions_netral' : netral,
+    }
+
+    return jsonify(data), 200
 
 
 if __name__ == "__main__":

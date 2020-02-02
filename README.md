@@ -8,6 +8,7 @@ Project ini adalah sebagai pendukung project [data processing](https://gitlab.co
   - [x] Monitoring target Management
   - [ ] JWT Login
   - [ ] Access data processing 
+  - [ ] Dashboard API
 
 ## Prerequirement
 - create collection in database mongo on names
