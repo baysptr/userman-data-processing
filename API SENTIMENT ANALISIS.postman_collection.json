@@ -1,0 +1,482 @@
+{
+	"info": {
+		"_postman_id": "64a19ed7-6760-4bdd-99cd-1f6f55ef95bf",
+		"name": "API SENTIMENT ANALISIS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "API",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6MjEyMVwvYXBpXC9sb2dpbiIsImlhdCI6MTU3MzkxNzExNiwiZXhwIjoxNTczOTIwNzE2LCJuYmYiOjE1NzM5MTcxMTYsImp0aSI6IjZJbnFDNDNiYk1QeGRmUEgiLCJzdWIiOjIsInBydiI6IjdiNGJiODcwZDJhODE0MGMzNmFkZWE1YWJhZjYyZjVlMGExZTYwNWYifQ.Fz3A1et7zNH-c6H3Sf9v72cEBNWc2UrdIK82A4oFqRE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "target_number",
+							"value": "+6287853462504",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "content",
+							"value": "testetst jhdjs fsjhd fjsd fjhsd fjhs g",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "text",
+							"value": "dia kayak anjir",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://30.30.30.45:8000/",
+					"protocol": "http",
+					"host": [
+						"30",
+						"30",
+						"30",
+						"45"
+					],
+					"port": "8000",
+					"path": [
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "How To Create Role Users",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "nama",
+							"value": "fadel nuariko",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "fadel",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "12345678",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "facebook",
+							"value": "0",
+							"type": "text"
+						},
+						{
+							"key": "twitter",
+							"value": "0",
+							"type": "text"
+						},
+						{
+							"key": "telegram",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "instagram",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "id",
+							"value": "5e306900fcc73835067078a1",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:5000/update_role",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"update_role"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "How To Create Role Users",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "nama",
+							"value": "fadel nuariko",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "fadel",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "12345678",
+							"type": "text"
+						},
+						{
+							"key": "facebook",
+							"value": "0",
+							"type": "text"
+						},
+						{
+							"key": "twitter",
+							"value": "0",
+							"type": "text"
+						},
+						{
+							"key": "telegram",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "instagram",
+							"value": "1",
+							"type": "text"
+						},
+						{
+							"key": "id",
+							"value": "5e306900fcc73835067078a1",
+							"type": "text",
+							"disabled": true
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:5000/add_users",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"add_users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get data where id users",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "undefined_plus",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "bayu2505",
+							"type": "text"
+						},
+						{
+							"key": "message",
+							"value": "test ",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:5000/where_id/5e306900fcc73835067078a1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"where_id",
+						"5e306900fcc73835067078a1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all data users with role",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "undefined_plus",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "bayu2505",
+							"type": "text"
+						},
+						{
+							"key": "message",
+							"value": "test ",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:5000/list_users",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"list_users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get data account crawler where id account",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "undefined_plus",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "bayu2505",
+							"type": "text"
+						},
+						{
+							"key": "message",
+							"value": "test ",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:5000/where_id_account/5e31503dfcc7384efd0d8b9a",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"where_id_account",
+						"5e31503dfcc7384efd0d8b9a"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all data account crawler",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "username",
+							"value": "undefined_plus",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "bayu2505",
+							"type": "text"
+						},
+						{
+							"key": "message",
+							"value": "test ",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:5000/list_account_crawler",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"list_account_crawler"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "How to add account crawler",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9sb2NhbGhvc3Q6MjEyMVwvYXBpXC9sb2dpbiIsImlhdCI6MTU3MzkxNzExNiwiZXhwIjoxNTczOTIwNzE2LCJuYmYiOjE1NzM5MTcxMTYsImp0aSI6IjZJbnFDNDNiYk1QeGRmUEgiLCJzdWIiOjIsInBydiI6IjdiNGJiODcwZDJhODE0MGMzNmFkZWE1YWJhZjYyZjVlMGExZTYwNWYifQ.Fz3A1et7zNH-c6H3Sf9v72cEBNWc2UrdIK82A4oFqRE",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "account_name",
+							"value": "haji",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "haji",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "haji1234",
+							"type": "text"
+						},
+						{
+							"key": "api_key",
+							"value": "https://api.key",
+							"type": "text"
+						},
+						{
+							"key": "secret_key",
+							"value": "45673yrueghjfbdnetrtyuh",
+							"type": "text"
+						},
+						{
+							"key": "type",
+							"value": "twitter",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:5000/add_account_craw",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"add_account_craw"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

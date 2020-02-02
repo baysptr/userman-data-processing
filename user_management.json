@@ -1,0 +1,2 @@
+{"_id":{"$oid":"5e306848fcc73834db50f6c2"},"nama":"SUPER ADMIN","username":"admin","password":"$argon2id$v=19$m=102400,t=2,p=8$Mbe9OFqCdgfoytiwwp/2EQ$FhBfzZuL7ugo9ov1ZtNxMg","is_fb":true,"is_tw":true,"is_ig":true,"is_tg":true,"is_superadmin":true,"tgl_post":"2020-01-28 23:58:48"}
+{"_id":{"$oid":"5e306900fcc73835067078a1"},"nama":"FADEL NUARIKO","username":"fadel","password":"$argon2id$v=19$m=102400,t=2,p=8$NO57gmioCGi7QU6OQv8kgQ$NWJPRFhzLDlG98cKOQtfLg","is_fb":false,"is_tw":false,"is_ig":true,"is_tg":true,"is_superadmin":false,"tgl_post":"2020-01-29 00:09:59"}

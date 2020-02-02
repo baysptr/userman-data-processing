@@ -1,0 +1,11 @@
+argon2-cffi==19.2.0
+cffi==1.13.2
+Click==7.0
+Flask==1.1.1
+itsdangerous==1.1.0
+Jinja2==2.11.0
+MarkupSafe==1.1.1
+pycparser==2.19
+pymongo==2.8.1
+six==1.14.0
+Werkzeug==0.16.1
