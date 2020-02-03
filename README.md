@@ -9,6 +9,10 @@ Project ini adalah sebagai pendukung project [data processing](https://gitlab.co
   - [ ] JWT Login
   - [ ] Access data processing 
   - [ ] Dashboard API
+	- [x] Sentiment Post
+	- [x] Trending
+	- [x] Word Cloud
+	- [ ] Latests Posts
 
 ## Prerequirement
 - create collection in database mongo on names

@@ -15,6 +15,8 @@ db = client['mon_sos']
 um = db['user_management']
 acw = db['account_crawler']
 mon = db['monitor']
+ori_data = db['ori_data']
+woc = db['word_cloud']
 ph = PasswordHasher()
 
 app.config['JWT_SECRET_KEY'] = 'super-secret-super-rahasia-xcjvhaweurhvskjhn'  # Change this!
@@ -241,6 +243,23 @@ def dashbord(hastag,sources):
         'mentions_netral' : netral,
     }
 
+    return jsonify(data), 200
+
+@app.route('/trending/<string:where_is>/<int:limit>', methods=['GET'])
+def trending(where_is, limit):
+    trend = ori_data.find().sort({where_is: -1}).limit(limit)
+    data = {
+        "trending": trend
+    }
+    return jsonify(data), 200
+
+@app.route('/word_cloud/<string:where_is>/<int:limit>', methods=['GET'])
+def word_cloud(limit):
+    where = where_is + ".count"
+    w = woc.find().sort({where: -1}).limit(limit)
+    data = {
+        "word_cloud": w
+    }
     return jsonify(data), 200
 
 
