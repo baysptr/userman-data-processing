@@ -88,11 +88,11 @@ def login():
         return jsonify({"msg": "Bad username or password"}), 401
     access_token = create_access_token(identity={   'username':username,
                                                     'akses': [
-                                                            'is_fb':us['is_fb'],
-                                                            'is_tw':us['is_tw'],
-                                                            'is_ig':us['is_ig'],
-                                                            'is_tg':us['is_tg'],
-                                                            'is_superadmin':us['is_superadmin']
+                                                            {'is_fb':us['is_fb']},
+                                                            {'is_tw':us['is_tw']},
+                                                            {'is_ig':us['is_ig']},
+                                                            {'is_tg':us['is_tg']},
+                                                            {'is_superadmin':us['is_superadmin']}
                                                             ]})
     return jsonify(access_token=access_token), 200
 
