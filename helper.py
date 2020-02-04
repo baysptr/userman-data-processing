@@ -20,6 +20,21 @@ def pretty_respon_trending(obj):
     resp['data'] = resp_data
     return resp
 
+def pretty_respon_minfluencer(obj):
+    resp = {}
+    resp['code'] = 200
+    resp['message'] = "Data trending"
+    resp_data = []
+    st = 1
+    for i in obj:
+        row = {}
+        row['user_id'] = i['_id']
+        row['count'] = i['count']
+        resp_data.insert(st, row)
+        st += 1
+    resp['data'] = resp_data
+    return resp
+
 def pretty_respon_woc(obj, code, message):
     resp = {}
     resp['code'] = code

@@ -3,7 +3,7 @@ import pymongo
 from argon2 import PasswordHasher
 from bson.objectid import ObjectId
 from datetime import datetime
-from helper import pretty_respon_users, str2bool, respon_action, pretty_respon_acrawler, pretty_respon_monitor, pretty_respon_woc, pretty_respon_trending
+from helper import pretty_respon_users, str2bool, respon_action, pretty_respon_acrawler, pretty_respon_monitor, pretty_respon_woc, pretty_respon_trending, pretty_respon_minfluencer
 from flask_jwt_extended import (
     JWTManager, jwt_optional,jwt_required, create_access_token,
     get_jwt_identity
@@ -290,6 +290,12 @@ def setiment_count():
             "neutral": neu.count(True)
         }
     }
+    return jsonify(data), 200
+
+@app.route("/most_user/<int:limit>", methods=['GET'])
+def most_user(limit):
+    sbc = ori_data.aggregate([{"$unwind": "$user_id"}, {"$sortByCount": "$user_id"}, {"$limit": limit}])
+    data = pretty_respon_minfluencer(sbc)
     return jsonify(data), 200
 
 if __name__ == "__main__":

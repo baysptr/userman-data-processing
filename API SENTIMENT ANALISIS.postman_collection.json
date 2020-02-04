@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "64a19ed7-6760-4bdd-99cd-1f6f55ef95bf",
+		"_postman_id": "a414c62f-e7cb-4ad0-a60b-74de0ddd98a7",
 		"name": "API SENTIMENT ANALISIS",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -210,9 +210,6 @@
 		},
 		{
 			"name": "Get data where id users",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
 			"request": {
 				"method": "GET",
 				"header": [
@@ -260,9 +257,6 @@
 		},
 		{
 			"name": "Get all data users with role",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
 			"request": {
 				"method": "GET",
 				"header": [
@@ -309,9 +303,6 @@
 		},
 		{
 			"name": "Get data account crawler where id account",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
 			"request": {
 				"method": "GET",
 				"header": [
@@ -359,9 +350,6 @@
 		},
 		{
 			"name": "Get all data account crawler",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
 			"request": {
 				"method": "GET",
 				"header": [
@@ -476,7 +464,104 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Get Word Cloud",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "localhost:5000/word_cloud/10",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"word_cloud",
+						"10"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Trending",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "localhost:5000/trending/10",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"trending",
+						"10"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Count Trending",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "localhost:5000/categori_count",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"categori_count"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Count Sentiment",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "localhost:5000/sentiment_count",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"sentiment_count"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Most users",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "localhost:5000/most_user/10",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"most_user",
+						"10"
+					]
+				}
+			},
+			"response": []
 		}
-	],
-	"protocolProfileBehavior": {}
+	]
 }
