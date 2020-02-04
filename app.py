@@ -3,20 +3,21 @@ import pymongo
 from argon2 import PasswordHasher
 from bson.objectid import ObjectId
 from datetime import datetime
-from helper import pretty_respon_users, str2bool, respon_action, pretty_respon_acrawler, pretty_respon_monitor
+from helper import pretty_respon_users, str2bool, respon_action, pretty_respon_acrawler, pretty_respon_monitor, pretty_respon_woc, pretty_respon_trending
 from flask_jwt_extended import (
     JWTManager, jwt_optional,jwt_required, create_access_token,
     get_jwt_identity
 )
 
 app = Flask(__name__)
-client = pymongo.MongoClient('mongodb://localhost:27017/')
-db = client['mon_sos']
+client = pymongo.MongoClient('mongodb://30.30.30.44:27017/')
+db = client['sosmon_ori']
 um = db['user_management']
 acw = db['account_crawler']
 mon = db['monitor']
 ori_data = db['ori_data']
 woc = db['word_cloud']
+setxt = db['text_sentiment']
 ph = PasswordHasher()
 
 app.config['JWT_SECRET_KEY'] = 'super-secret-super-rahasia-xcjvhaweurhvskjhn'  # Change this!
@@ -235,33 +236,61 @@ def dashbord(hastag,sources):
     negativ = ori_data.find({'text':{  '$regex' : ".*"+hastag+".*"},'source':{ '$in':sources },'sentiment':2 }).count()
     netral = ori_data.find({'text':{  '$regex' : ".*"+hastag+".*"},'source':{ '$in':sources },'sentiment':0 }).count()
     data = {
-        'hastag'   : hastag,
-        'sources'  : sources,
-        'mentions_count'   : mentions,
-        'mentions_positiv' : positiv,
-        'mentions_negativ' : negativ,
-        'mentions_netral' : netral,
+        'hastag': hastag,
+        'sources': sources,
+        'mentions_count': mentions,
+        'mentions_positiv': positiv,
+        'mentions_negativ': negativ,
+        'mentions_netral': netral,
     }
 
     return jsonify(data), 200
 
-@app.route('/trending/<string:where_is>/<int:limit>', methods=['GET'])
-def trending(where_is, limit):
-    trend = ori_data.find().sort({where_is: -1}).limit(limit)
-    data = {
-        "trending": trend
-    }
+@app.route('/trending/<int:limit>', methods=['GET'])
+def trending(limit):
+    trend = ori_data.find().sort([("total_like", -1)]).limit(limit)
+    data = pretty_respon_trending(trend)
     return jsonify(data), 200
 
-@app.route('/word_cloud/<string:where_is>/<int:limit>', methods=['GET'])
+@app.route('/word_cloud/<int:limit>', methods=['GET'])
 def word_cloud(limit):
-    where = where_is + ".count"
-    w = woc.find().sort({where: -1}).limit(limit)
+    w = woc.find({}).sort([("instagram.count", -1), ("telegram.count", -1), ("facebook.count", -1), ("twitter.count", -1)]).limit(limit)
+    data = pretty_respon_woc(w, 200, "Word Clouds")
+    return jsonify(data), 200
+
+@app.route('/categori_count', methods=['GET'])
+def categori_count():
+    ig = ori_data.find({"source": "instagram"})
+    tw = ori_data.find({"source": "twitter"})
+    tg = ori_data.find({"source": "telegram"})
+    fb = ori_data.find({"source": "facebook"})
     data = {
-        "word_cloud": w
+        "code": 200,
+        "message": "All count data sources",
+        "data": {
+            "instagram": ig.count(True),
+            "twitter": tw.count(True),
+            "telegram": tg.count(True),
+            "facebook": fb.count(True)
+        }
     }
     return jsonify(data), 200
 
+@app.route('/sentiment_count', methods=['GET'])
+def setiment_count():
+    pos = setxt.find({"sentiment": "positive"})
+    neg = setxt.find({"sentiment": "negative"})
+    neu = setxt.find({"sentiment": "neutral"})
+    data = {
+        "code": 200,
+        "message": "All count data sentiment",
+        "data": {
+            "positive": pos.count(True),
+            "negative": neg.count(True),
+            "neutral": neu.count(True)
+        }
+    }
+    return jsonify(data), 200
 
 if __name__ == "__main__":
     app.run(debug=True)

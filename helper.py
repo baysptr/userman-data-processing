@@ -1,3 +1,44 @@
+def pretty_respon_trending(obj):
+    resp = {}
+    resp['code'] = 200
+    resp['message'] = "Data trending"
+    resp_data = []
+    st = 1
+    for i in obj:
+        row = {}
+        row['userid'] = i['user_id']
+        row['content_id'] = i['content_id']
+        row['category'] = i['category']
+        row['url'] = i['url']
+        row['source'] = i['source']
+        row['text'] = i['text']
+        row['total_comment'] = i['total_comment']
+        row['total_like'] = i['total_like']
+        row['total_view'] = i['total_view']
+        resp_data.insert(st, row)
+        st += 1
+    resp['data'] = resp_data
+    return resp
+
+def pretty_respon_woc(obj, code, message):
+    resp = {}
+    resp['code'] = code
+    resp['message'] = message
+    resp_data = []
+    st = 1
+    for i in obj:
+        row = {}
+        row['word'] = i['word']
+        row['from_instagram'] = i['instagram']['count']
+        row['from_telegram'] = i['telegram']['count']
+        row['from_facebook'] = i['facebook']['count']
+        row['from_twitter'] = i['twitter']['count']
+        row['tgl_process'] = i['tgl_proccess']
+        resp_data.insert(st, row)
+        st += 1
+    resp['data'] = resp_data
+    return resp
+
 def pretty_respon_users(obj):
     resp = {}
     resp['code'] = 200
