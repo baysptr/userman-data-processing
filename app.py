@@ -230,14 +230,15 @@ def add_target():
 # =========================================================================
 
 @app.route('/dashboard', methods=["POST"])
-def dashbord(hastag,sources):
-    mentions = ori_data.find({'text':{  '$regex' : ".*"+hastag+".*"},'source':{ '$in':sources } }).count()
-    positiv = ori_data.find({'text':{  '$regex' : ".*"+hastag+".*"},'source':{ '$in':sources },'sentiment':1 }).count()
-    negativ = ori_data.find({'text':{  '$regex' : ".*"+hastag+".*"},'source':{ '$in':sources },'sentiment':2 }).count()
-    netral = ori_data.find({'text':{  '$regex' : ".*"+hastag+".*"},'source':{ '$in':sources },'sentiment':0 }).count()
+def dashbord():
+    req = request.values
+    mentions = ori_data.find({'text':{  '$regex' : ".*"+req['hastag']+".*"},'source':{ '$in':req['sources'] } }).count()
+    positiv = ori_data.find({'text':{  '$regex' : ".*"+req['hastag']+".*"},'source':{ '$in':req['sources'] },'sentiment':1 }).count()
+    negativ = ori_data.find({'text':{  '$regex' : ".*"+req['hastag']+".*"},'source':{ '$in':req['sources'] },'sentiment':2 }).count()
+    netral = ori_data.find({'text':{  '$regex' : ".*"+req['hastag']+".*"},'source':{ '$in':req['sources'] },'sentiment':0 }).count()
     data = {
-        'hastag': hastag,
-        'sources': sources,
+        'hastag': req['hastag'],
+        'sources': req['sources'],
         'mentions_count': mentions,
         'mentions_positiv': positiv,
         'mentions_negativ': negativ,
@@ -292,9 +293,21 @@ def setiment_count():
     }
     return jsonify(data), 200
 
-@app.route("/most_user/<int:limit>", methods=['GET'])
+@app.route("/most_user/<int:limit>", methods=['POST'])
 def most_user(limit):
-    sbc = ori_data.aggregate([{"$unwind": "$user_id"}, {"$sortByCount": "$user_id"}, {"$limit": limit}])
+    req = request.values
+    sources = req['sources'].split(',')
+    sbc = ori_data.aggregate([
+        { "$match": { "text": {  '$regex' : ".*"+req['hastag']+".*"},"source":{ '$in':sources } } },
+        { "$group": {
+            "_id": {
+                "user_id": "$user_id"
+            },
+            "count": { "$sum": 1 }
+        }},
+        {"$sort":{"count":-1}},
+        {"$limit":limit}
+    ])
     data = pretty_respon_minfluencer(sbc)
     return jsonify(data), 200
 
