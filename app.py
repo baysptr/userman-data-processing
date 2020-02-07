@@ -2,8 +2,17 @@ from flask import Flask, jsonify, request
 import pymongo
 from argon2 import PasswordHasher
 from bson.objectid import ObjectId
+from bson.son import SON
 from datetime import datetime
-from helper import pretty_respon_users, str2bool, respon_action, pretty_respon_acrawler, pretty_respon_monitor, pretty_respon_woc, pretty_respon_trending, pretty_respon_minfluencer
+from helper import pretty_respon_users, \
+    str2bool, \
+    respon_action, \
+    pretty_respon_acrawler, \
+    pretty_respon_monitor, \
+    pretty_respon_woc, \
+    pretty_respon_trending, \
+    pretty_respon_muser, \
+    pretty_respon_csentiment
 from flask_jwt_extended import (
     JWTManager, jwt_optional,jwt_required, create_access_token,
     get_jwt_identity
@@ -293,12 +302,12 @@ def setiment_count():
     }
     return jsonify(data), 200
 
-@app.route("/most_user/<int:limit>", methods=['POST'])
-def most_user(limit):
+@app.route("/search_hashtag", methods=['POST'])
+def search_hashtag():
     req = request.values
     sources = req['sources'].split(',')
     sbc = ori_data.aggregate([
-        { "$match": { "text": {  '$regex' : ".*"+req['hastag']+".*"},"source":{ '$in':sources } } },
+        { "$match": { "text": {  '$regex' : ".*"+req['hashtag']+".*"},"source":{ '$in':sources } } },
         { "$group": {
             "_id": {
                 "user_id": "$user_id"
@@ -306,9 +315,21 @@ def most_user(limit):
             "count": { "$sum": 1 }
         }},
         {"$sort":{"count":-1}},
-        {"$limit":limit}
+        {"$limit":int(req['limit'])}
     ])
-    data = pretty_respon_minfluencer(sbc)
+    data = pretty_respon_muser(sbc, "Most Write or Say: (#"+ req['hashtag']+ ") on source: ['"+req['sources']+"'] with limit: "+ req['limit'])
+    return jsonify(data), 200
+
+@app.route("/most_user/<int:limit>", methods=['GET'])
+def most_user(limit):
+    sbc = ori_data.aggregate([{"$unwind": "$user_id"}, {"$group": {"_id": {"user_id": "$user_id"}, "count": {"$sum": 1}}}, {"$sort": {"count":-1}}, {"$limit": int(limit)}])
+    data = pretty_respon_muser(sbc, "Most User to write or say on any social media")
+    return jsonify(data), 200
+
+@app.route("/count_sentiment", methods=['GET'])
+def count_sentiment():
+    sbc = setxt.aggregate([{"$match":{"sentiment": {"$in": ["positive", "negative", "neutral"]}}},{"$group":{"_id": {"sentiment": "$sentiment"},"count": {"$sum": 1}}}])
+    data = pretty_respon_csentiment(sbc)
     return jsonify(data), 200
 
 if __name__ == "__main__":

@@ -544,7 +544,65 @@
 			"response": []
 		},
 		{
-			"name": "Get Most users",
+			"name": "Search by Hashtag",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "",
+						"value": "",
+						"disabled": true
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "limit",
+							"value": "10",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "hastag",
+							"value": "hti",
+							"description": "",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "hashtag",
+							"value": "hti",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "sources",
+							"value": "instagram,telegram",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:5000/search_hashtag",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"search_hashtag"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Most User Post",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -558,6 +616,25 @@
 					"path": [
 						"most_user",
 						"10"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Count Sentiment",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "localhost:5000/count_sentiment",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"count_sentiment"
 					]
 				}
 			},

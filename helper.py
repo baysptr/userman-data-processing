@@ -20,15 +20,31 @@ def pretty_respon_trending(obj):
     resp['data'] = resp_data
     return resp
 
-def pretty_respon_minfluencer(obj):
+def pretty_respon_muser(obj, msg):
     resp = {}
     resp['code'] = 200
-    resp['message'] = "Data trending"
+    resp['message'] = msg
     resp_data = []
     st = 1
     for i in obj:
         row = {}
-        row['user_id'] = i['_id']
+        row['user_id'] = i['_id']['user_id']
+        row['count'] = i['count']
+        # row['say'] = i['_id']['text']
+        resp_data.insert(st, row)
+        st += 1
+    resp['data'] = resp_data
+    return resp
+
+def pretty_respon_csentiment(obj):
+    resp = {}
+    resp['code'] = 200
+    resp['message'] = "Get count sentiment"
+    resp_data = []
+    st = 1
+    for i in obj:
+        row = {}
+        row['type_sentiment'] = i['_id']['sentiment']
         row['count'] = i['count']
         resp_data.insert(st, row)
         st += 1

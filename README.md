@@ -12,7 +12,10 @@ Project ini adalah sebagai pendukung project [data processing](https://gitlab.co
 	- [x] Sentiment Post
 	- [x] Trending
 	- [x] Word Cloud
-	- [ ] Latests Posts
+	- [x] Search by hashtag (output: count)
+	- [x] Most Users say or writing (output: count)
+	- [x] Most Sentiment
+	- [ ] Latest Posts
 
 ## Prerequirement
 - create collection in database mongo on names
